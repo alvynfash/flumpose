@@ -1,0 +1,53 @@
+extension StringExtensions on String {
+  /// Returns true if the string is a valid email address.
+  bool get isValidEmail {
+    final emailRegex = RegExp(
+      r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+    );
+    return emailRegex.hasMatch(this);
+  }
+
+  /// Returns the string reversed.
+  String get reversed => split('').reversed.join();
+}
+
+extension ListExtensions<T> on List<T> {
+  /// Returns the second element of the list or null if it does not exist.
+  T? get second => length > 1 ? this[1] : null;
+
+  /// Returns a new list with the elements shuffled.
+  List<T> shuffled() {
+    final list = List<T>.from(this);
+    list.shuffle();
+    return list;
+  }
+}
+
+extension DateTimeExtensions on DateTime {
+  /// Returns true if the date is a weekend.
+  bool get isWeekend => weekday == DateTime.saturday || weekday == DateTime.sunday;
+
+  /// Returns the number of days until the next Monday.
+  int get daysUntilNextMonday {
+    final daysToAdd = (DateTime.monday - weekday) % 7;
+    return daysToAdd == 0 ? 7 : daysToAdd;
+  }
+}
+
+extension MapExtensions<K, V> on Map<K, V> {
+  /// Returns a new map with all keys converted to strings.
+  Map<String, V> get keysToStrings {
+    return map((key, value) => MapEntry(key.toString(), value));
+  }
+
+  /// Returns a new map with values filtered by the given predicate.
+  Map<K, V> filterValues(bool Function(V) predicate) {
+    final filtered = <K, V>{};
+    forEach((key, value) {
+      if (predicate(value)) {
+        filtered[key] = value;
+      }
+    });
+    return filtered;
+  }
+}

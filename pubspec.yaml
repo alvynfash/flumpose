@@ -1,0 +1,26 @@
+name: flumpose
+description: A Flutter package for declarative, const-optimized UI composition with 85%+ memory reduction.
+version: 0.0.3
+homepage: https://github.com/tribestick/flumpose
+repository: https://github.com/tribestick/flumpose
+documentation: https://github.com/tribestick/flumpose/blob/main/README.md
+
+environment:
+  sdk: ">=3.8.1 <4.0.0"
+  flutter: ">=1.20.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.tribestick.flumpose
+        pluginClass: FlumposePlugin

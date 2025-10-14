@@ -1,3 +1,10 @@
+## [0.0.6+1]
+Adds an MIT license to make Flumpose fully OSI-compliant and open-source friendly.
+
+- Added an MIT License file to the repository.
+- Improves visibility and compliance on pub.dev and GitHub.
+- Ensures the package meets community standards for open-source distribution.
+
 ## [0.0.6]
 Removes incorrect `plugin` configuration from `pubspec.yaml` to properly classify **Flumpose** as a pure Dart Flutter package.
 

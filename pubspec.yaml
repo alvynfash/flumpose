@@ -1,6 +1,6 @@
 name: flumpose
 description: A Flutter package for declarative, const-optimized UI composition with 85%+ memory reduction.
-version: 0.0.6
+version: 0.0.6+1
 homepage: https://github.com/alvynfash/flumpose
 repository: https://github.com/alvynfash/flumpose
 documentation: https://github.com/alvynfash/flumpose/blob/main/README.md

@@ -17,3 +17,6 @@ export 'src/flex_extensions.dart';
 export 'src/stack_extensions.dart';
 export 'src/responsive_extensions.dart';
 export 'src/utility_extensions.dart';
+
+// Performance optimizations
+export 'src/decoration_builder.dart';

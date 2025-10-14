@@ -1,3 +1,16 @@
+## [0.0.4]
+Introduces `DecorationBuilder` and `TextStyleExtensions` for
+performance improvements.
+
+`DecorationBuilder` avoids creating multiple nested containers
+when applying various decorations.
+
+`TextStyleExtensions` optimizes text styling by accumulating
+style changes instead of creating new `Text` widgets.
+
+Adds const-optimized values for common flex, aspect ratio, and
+opacity values to reduce memory allocation.
+
 ## [0.0.3]
 ### Changed - Performance Improvements
 ```dart

@@ -1,3 +1,12 @@
+## [0.0.6]
+Removes incorrect `plugin` configuration from `pubspec.yaml` to properly classify **Flumpose** as a pure Dart Flutter package.
+
+- Fixed an issue where Flutter expected a missing Android `FlumposePlugin` class.
+- Updated `pubspec.yaml` to remove the unnecessary `plugin:` block.
+- Added `uses-material-design: true` for improved example compatibility.
+- Cleaned up metadata and improved discoverability for pub.dev (added topics).
+- This ensures a cleaner, warning-free setup and smoother installation for all users.
+
 ## [0.0.5]
 Introduces the new `.styled()` extension for `Text`, optimized for performance and const-safety.
 

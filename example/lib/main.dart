@@ -94,6 +94,11 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
       icon: Icons.speed,
       builder: (context) => const PerformanceExample(),
     ),
+    ExampleSection(
+      title: 'Text Styling',
+      icon: Icons.text_fields,
+      builder: (context) => const TextStylingExample(),
+    ),
   ];
 
   @override
@@ -371,10 +376,12 @@ class DecorationBuilderExample extends StatelessWidget {
         const Text('Color + Border + Radius')
             .color(Colors.white)
             .pad(16)
-            .decorate((d) => d
-                .color(Colors.blue)
-                .borderAll(color: Colors.white, width: 2)
-                .circular(12))
+            .decorate(
+              (d) => d
+                  .color(Colors.blue)
+                  .borderAll(color: Colors.white, width: 2)
+                  .circular(12),
+            )
             .alignCenter(),
         const SizedBox(height: 24),
 
@@ -383,55 +390,63 @@ class DecorationBuilderExample extends StatelessWidget {
             .color(Colors.white)
             .bold()
             .pad(20)
-            .decorate((d) => d
-                .linearGradient(
-                  colors: [Colors.purple, Colors.deepPurple],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                )
-                .borderAll(color: Colors.purple.shade700, width: 3)
-                .circular(16)
-                .simpleShadow(blurRadius: 10, offset: const Offset(0, 4)))
+            .decorate(
+              (d) => d
+                  .linearGradient(
+                    colors: [Colors.purple, Colors.deepPurple],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  )
+                  .borderAll(color: Colors.purple.shade700, width: 3)
+                  .circular(16)
+                  .simpleShadow(blurRadius: 10, offset: const Offset(0, 4)),
+            )
             .alignCenter(),
         const SizedBox(height: 24),
 
         _buildSectionTitle('Complex Decoration'),
-        Container(
-          height: 120,
-        )
-            .decorate((d) => d
-                .linearGradient(
-                  colors: [Colors.orange, Colors.red],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                )
-                .border(Border(
-                  left: BorderSide(color: Colors.yellow, width: 4),
-                  right: BorderSide(color: Colors.yellow, width: 4),
-                  top: BorderSide(color: Colors.orange.shade900, width: 2),
-                  bottom: BorderSide(color: Colors.red.shade900, width: 2),
-                ))
-                .borderRadius(const BorderRadius.only(
-                  topLeft: Radius.circular(24),
-                  bottomRight: Radius.circular(24),
-                ))
-                .shadow(const BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 8,
-                  offset: Offset(2, 2),
-                ))
-                .shadow(const BoxShadow(
-                  color: Colors.orange,
-                  blurRadius: 20,
-                  spreadRadius: -5,
-                )))
+        Container(height: 120)
+            .decorate(
+              (d) => d
+                  .linearGradient(
+                    colors: [Colors.orange, Colors.red],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  )
+                  .border(
+                    Border(
+                      left: BorderSide(color: Colors.yellow, width: 4),
+                      right: BorderSide(color: Colors.yellow, width: 4),
+                      top: BorderSide(color: Colors.orange.shade900, width: 2),
+                      bottom: BorderSide(color: Colors.red.shade900, width: 2),
+                    ),
+                  )
+                  .borderRadius(
+                    const BorderRadius.only(
+                      topLeft: Radius.circular(24),
+                      bottomRight: Radius.circular(24),
+                    ),
+                  )
+                  .shadow(
+                    const BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 8,
+                      offset: Offset(2, 2),
+                    ),
+                  )
+                  .shadow(
+                    const BoxShadow(
+                      color: Colors.orange,
+                      blurRadius: 20,
+                      spreadRadius: -5,
+                    ),
+                  ),
+            )
             .alignCenter(),
         const SizedBox(height: 24),
 
         _buildSectionTitle('Decoration + Padding (Single Container)'),
-        _buildDescription(
-          'decorateWithPadding combines both in one Container',
-        ),
+        _buildDescription('decorateWithPadding combines both in one Container'),
         const Text('Optimized!')
             .color(Colors.white)
             .bold()
@@ -447,43 +462,42 @@ class DecorationBuilderExample extends StatelessWidget {
 
         _buildSectionTitle('Card-like Design'),
         Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text('Product Name')
-                .fontSize(18)
-                .bold()
-                .color(Colors.grey.shade800),
-            const SizedBox(height: 8),
-            const Text('A beautiful product description')
-                .fontSize(14)
-                .color(Colors.grey.shade600),
-            const SizedBox(height: 12),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('\$99.99')
-                    .fontSize(20)
-                    .bold()
-                    .color(Colors.blue.shade700),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 8,
-                  ),
-                  child: const Text('Buy Now')
-                      .color(Colors.white)
-                      .fontSize(12)
-                      .bold(),
-                )
-                    .decorate((d) => d
-                        .color(Colors.blue)
-                        .circular(20)
-                        .simpleShadow(color: Colors.blue.shade700))
-                    .ripple(() {}),
+                const Text(
+                  'Product Name',
+                ).fontSize(18).bold().color(Colors.grey.shade800),
+                const SizedBox(height: 8),
+                const Text(
+                  'A beautiful product description',
+                ).fontSize(14).color(Colors.grey.shade600),
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      '\$99.99',
+                    ).fontSize(20).bold().color(Colors.blue.shade700),
+                    Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 8,
+                          ),
+                          child: const Text(
+                            'Buy Now',
+                          ).color(Colors.white).fontSize(12).bold(),
+                        )
+                        .decorate(
+                          (d) => d
+                              .color(Colors.blue)
+                              .circular(20)
+                              .simpleShadow(color: Colors.blue.shade700),
+                        )
+                        .ripple(() {}),
+                  ],
+                ),
               ],
-            ),
-          ],
-        )
+            )
             .decorateWithPadding(
               padding: const EdgeInsets.all(16),
               builder: (d) => d
@@ -1687,6 +1701,59 @@ child.padOnly(           // Specific sides
           ],
         ),
       ),
+    );
+  }
+}
+
+// ================================
+// Text Styling Example
+// ================================
+class TextStylingExample extends StatelessWidget {
+  const TextStylingExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: [
+        _buildSectionTitle('Text Styling Comparison'),
+        _buildDescription(
+          'Two ways to style text: chained extensions vs. optimized .styled().',
+        ),
+        const SizedBox(height: 16),
+
+        _buildSectionTitle('1. Chained Style Extensions'),
+        _buildCodeCard(
+          "Text('Chained')\n  .color(Colors.blue)\n  .fontSize(22)\n  .bold()\n  .italic()",
+        ),
+        Text('Chained').color(Colors.blue).fontSize(22).bold().italic().pad(8),
+        _buildDescription(
+          'Each call creates a new Text widget. Flumpose optimizes this, but each style is a new allocation.',
+        ),
+        const SizedBox(height: 24),
+
+        _buildSectionTitle('2. Optimized .styled() Extension'),
+        _buildCodeCard(
+          "Text('Styled').styled(\n  color: Colors.blue,\n  fontSize: 22,\n  weight: FontWeight.bold,\n  style: FontStyle.italic,\n)",
+        ),
+        Text('Styled')
+            .styled(
+              color: Colors.blue,
+              fontSize: 22,
+              weight: FontWeight.bold,
+              style: FontStyle.italic,
+            )
+            .pad(8),
+        _buildDescription(
+          'All style properties are merged in a single allocation. This is more efficient and const-safe when using compile-time constants.',
+        ),
+        const SizedBox(height: 16),
+        _buildSectionTitle('When to prefer .styled()'),
+        _buildDescription(
+          '• Use `.styled()` when setting multiple style properties at once for better performance.\n'
+          '• Chaining is fine for 1-2 properties or when readability is preferred.',
+        ),
+      ],
     );
   }
 }

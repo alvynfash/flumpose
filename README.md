@@ -493,6 +493,57 @@ Text('Hi').pad(16)  // Reuses const instance ⚡
 - `textColor(Color)` - Set text color (alias)
 - `bold()` - Make text bold
 - `italic()` - Make text italic
+- `styled({color, fontSize, weight, style, ...})` - Efficiently apply multiple text style properties at once (see below)
+---
+
+## 🖋️ Text Styling
+
+Flumpose provides two approaches for styling text:
+
+### 1. Chained Style Extensions (Classic)
+
+```dart
+Text('Hello')
+  .color(Colors.red)
+  .fontSize(18)
+  .bold()
+  .italic()
+```
+
+This is expressive, but each call creates a new Text widget (though Flumpose optimizes allocations internally).
+
+### 2. `.styled()` Extension (Optimized, Fewer Allocations)
+
+```dart
+Text('Hello').styled(
+  color: Colors.red,
+  fontSize: 18,
+  weight: FontWeight.bold,
+  style: FontStyle.italic,
+)
+```
+
+#### Example Comparison
+
+```dart
+// Chained style (multiple allocations)
+Text('Styled!').color(Colors.blue).fontSize(20).bold()
+
+// Optimized single-allocation (recommended for many styles)
+Text('Styled!').styled(
+  color: Colors.blue,
+  fontSize: 20,
+  weight: FontWeight.bold,
+)
+```
+
+#### Why `.styled()`?
+- **Performance:** All style changes are merged in a single allocation, reducing widget churn.
+- **Const-safe:** If all parameters are compile-time constants, `.styled()` can be used in const contexts.
+- **Cleaner code:** Especially when applying 2+ style properties at once.
+
+> **Tip:** `.styled()` is most useful when setting multiple style properties at once. For single property changes, chaining remains convenient and expressive.
+
 
 ### Animation Extensions
 - `fade({duration})` - Animated opacity

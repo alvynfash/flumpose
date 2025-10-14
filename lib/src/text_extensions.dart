@@ -77,3 +77,56 @@ extension TextStyleExtensions on Text {
   Text lineThrough() =>
       _withStyle((s) => s.copyWith(decoration: TextDecoration.lineThrough));
 }
+
+/// Extension for applying multiple TextStyle properties at once.
+///
+/// This is more efficient than chaining `.color().fontSize().bold()`, as it merges all changes in a single allocation.
+/// If all parameters are compile-time constants, `.styled()` is const-safe and can be used in const contexts.
+extension TextStyledExtension on Text {
+  /// Apply multiple style properties efficiently in a single copyWith.
+  ///
+  /// All parameters are optional and match those of [TextStyle.copyWith].
+  /// Example:
+  ///   Text('Hello').styled(color: Colors.red, fontSize: 18, weight: FontWeight.bold)
+  Text styled({
+    Color? color,
+    double? fontSize,
+    FontWeight? weight,
+    FontStyle? style,
+    double? letterSpacing,
+    double? wordSpacing,
+    double? height,
+    String? fontFamily,
+    TextDecoration? decoration,
+  }) {
+    final baseStyle = this.style ?? const TextStyle();
+    final mergedStyle = baseStyle.copyWith(
+      color: color,
+      fontSize: fontSize,
+      fontWeight: weight,
+      fontStyle: style,
+      letterSpacing: letterSpacing,
+      wordSpacing: wordSpacing,
+      height: height,
+      fontFamily: fontFamily,
+      decoration: decoration,
+    );
+    return Text(
+      data ?? '',
+      key: key,
+      style: mergedStyle,
+      strutStyle: strutStyle,
+      textAlign: textAlign,
+      textDirection: textDirection,
+      locale: locale,
+      softWrap: softWrap,
+      overflow: overflow,
+      textScaler: textScaler,
+      maxLines: maxLines,
+      semanticsLabel: semanticsLabel,
+      textWidthBasis: textWidthBasis,
+      textHeightBehavior: textHeightBehavior,
+      selectionColor: selectionColor,
+    );
+  }
+}

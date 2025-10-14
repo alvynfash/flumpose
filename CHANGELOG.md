@@ -1,3 +1,10 @@
+## [0.0.5]
+Introduces the new `.styled()` extension for `Text`, optimized for performance and const-safety.
+
+- `.styled()` enables direct, efficient text styling while minimizing allocations and supporting const usage wherever possible.
+- README and example documentation have been updated to demonstrate `.styled()` usage, comparisons with previous patterns, and best practices.
+- This release improves developer ergonomics by reducing unnecessary widget allocations while retaining the familiar, chainable syntax for composing widgets.
+
 ## [0.0.4]
 Introduces `DecorationBuilder` and `TextStyleExtensions` for
 performance improvements.

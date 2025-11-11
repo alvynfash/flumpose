@@ -1,3 +1,6 @@
+## [0.0.7]
+Introduces a comprehensive animation system, allowing you to animate widget properties without managing controllers.
+
 ## [0.0.6+1]
 Adds an MIT license to make Flumpose fully OSI-compliant and open-source friendly.
 

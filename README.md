@@ -111,7 +111,7 @@ Custom padding values:
 - **Transform & Clip**: Rotate, scale, translate, and clip with ease
 - **Text Styling**: Font size, color, weight, and style helpers
 - **Accessibility**: Semantic label extensions for better a11y
-- **Animations**: Fade and other animation helpers
+- **Built-in Animations**: Controller-free animations with inherited configuration
 - **Parent Wrapping**: Custom parent widget injection
 - **Visibility Control**: Show/hide, opacity, and pointer events
 - **Flex Layouts**: Expanded, flexible, and fractional sizing
@@ -236,12 +236,43 @@ Text('Optimized').decorateWithPadding(
 )
 ```
 
-#### Transform & Gestures
+#### Transform & Animations
 
 ```dart
+// Transform
 Icon(Icons.refresh).rotate(0.5)
+Container().scaleWidget(1.2)
+
+// Built-in animations (no controllers needed!)
+Container()
+  .pad(isExpanded ? 20 : 10, animate: true)
+  .backgroundColor(isActive ? Colors.blue : Colors.white, animate: true)
+  .animate(
+    duration: Duration(milliseconds: 300),
+    curve: Curves.easeOut,
+  )
+
+// Animated text
+'Hello World'
+  .animatedText()
+  .fontSize(isLarge ? 24 : 18)
+  .color(isActive ? Colors.blue : Colors.grey)
+  .animate(duration: Duration(milliseconds: 300))
+
+// Animated icons
+Icons.favorite
+  .animatedIcon()
+  .iconColor(isFavorite ? Colors.red : Colors.grey)
+  .iconSize(isFavorite ? 32 : 24)
+  .animate(duration: Duration(milliseconds: 200))
+```
+
+#### Gestures
+
+```dart
 Text('Click me').onTap(() => print('Tapped'))
 Container().ripple(() => print('Ripple'))
+Widget().onPan(onPanUpdate: (details) => print(details))
 ```
 
 #### Visibility & Responsive
@@ -546,7 +577,62 @@ Text('Styled!').styled(
 
 
 ### Animation Extensions
-- `fade({duration})` - Animated opacity
+
+**Core Animation API:**
+- `.animate({duration, curve})` - Configure animation for descendant widgets
+- `animate: true` parameter - Enable animation on supported extensions
+
+**Animated Layout:**
+- `pad()`, `padding()`, `padH()`, `padV()`, `padSymmetric()`, `padOnly()` - All support `animate: true`
+- `align()`, `alignCenter()`, etc. - All support `animate: true`
+- `width()`, `height()`, `size()`, `squareBox()` - All support `animate: true`
+
+**Animated Background:**
+- `backgroundColor(color, animate: true)` - Animate color changes
+- `backgroundGradient(gradient, animate: true)` - Animate gradient changes
+
+**Animated Transform:**
+- `rotate(angle, animate: true)` - Animate rotation
+- `scaleWidget(scale, animate: true)` - Animate scale
+- `translate(x: x, y: y, animate: true)` - Animate translation
+
+**Animated Text & Icons:**
+- `.animatedText()` - Create animated text widget (on String)
+- `.animatedIcon()` - Create animated icon widget (on IconData)
+- Chain with style methods: `.fontSize()`, `.color()`, `.iconColor()`, `.iconSize()`
+
+**Other Animations:**
+- `fade({duration})` - Simple fade animation
+
+**Example:**
+```dart
+// Single animation
+Container()
+  .pad(isExpanded ? 20 : 10, animate: true)
+  .animate(duration: Duration(milliseconds: 300))
+
+// Multiple animations with different configs
+Container()
+  .pad(isExpanded ? 20 : 10, animate: true)
+  .animate(duration: Duration(milliseconds: 300), curve: Curves.easeOut)
+  .backgroundColor(isActive ? Colors.blue : Colors.white, animate: true)
+  .animate(duration: Duration(milliseconds: 1000), curve: Curves.linear)
+
+// Animated text
+'Hello'
+  .animatedText()
+  .fontSize(isLarge ? 24 : 18)
+  .color(isActive ? Colors.blue : Colors.grey)
+  .animate(duration: Duration(milliseconds: 300))
+```
+
+**Performance Notes:**
+- Zero overhead when `animate: false` (default)
+- Uses single `AnimatedWrapper` instead of multiple `Builder` widgets
+- Leverages Flutter's built-in `AnimatedContainer`, `AnimatedPadding`, etc.
+- Const EdgeInsets optimization preserved even when animated
+
+See [ANIMATIONS.md](ANIMATIONS.md) for detailed documentation.
 
 ### Semantics Extensions
 - `semanticsLabel(String, {excludeSemantics})` - Add semantic label
@@ -654,7 +740,7 @@ Text('Styled!').styled(
 - Advanced gesture types (pan, drag, scale) [x]
 - Sliver extensions [x]
 - Material/Card wrappers [x]
-- AnimatedContainer extensions
+- Built-in animations [x]
 - Theme-aware helpers
 - Form and input extensions
 - Custom animation builders

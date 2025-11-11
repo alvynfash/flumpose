@@ -1,8 +1,21 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
+import 'animation_extensions.dart';
 
 extension BackgroundColorExtension on Widget {
-  Widget backgroundColor(Color color) => Container(color: color, child: this);
+  /// Set [animate] to true to animate background color changes
+  Widget backgroundColor(Color color, {bool animate = false}) {
+    if (!animate) return Container(color: color, child: this);
+
+    return AnimatedWrapper(
+      builder: (config) => AnimatedContainer(
+        color: color,
+        duration: config.duration,
+        curve: config.curve,
+        child: this,
+      ),
+    );
+  }
 }
 
 extension BackgroundImageExtension on Widget {
@@ -21,10 +34,24 @@ extension BackgroundImageExtension on Widget {
 }
 
 extension BackgroundGradientExtension on Widget {
-  Widget backgroundGradient(Gradient gradient) => Container(
-    decoration: BoxDecoration(gradient: gradient),
-    child: this,
-  );
+  /// Set [animate] to true to animate gradient changes
+  Widget backgroundGradient(Gradient gradient, {bool animate = false}) {
+    if (!animate) {
+      return Container(
+        decoration: BoxDecoration(gradient: gradient),
+        child: this,
+      );
+    }
+
+    return AnimatedWrapper(
+      builder: (config) => AnimatedContainer(
+        decoration: BoxDecoration(gradient: gradient),
+        duration: config.duration,
+        curve: config.curve,
+        child: this,
+      ),
+    );
+  }
 
   Widget backgroundLinearGradient({
     required List<Color> colors,

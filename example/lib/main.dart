@@ -1811,3 +1811,116 @@ extension on Widget {
     return this;
   }
 }
+
+// Animation Example
+class AnimationExampleApp extends StatelessWidget {
+  const AnimationExampleApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flumpose Animation Example',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: const AnimationExamplePage(),
+    );
+  }
+}
+
+class AnimationExamplePage extends StatefulWidget {
+  const AnimationExamplePage({super.key});
+
+  @override
+  State<AnimationExamplePage> createState() => _AnimationExamplePageState();
+}
+
+class _AnimationExamplePageState extends State<AnimationExamplePage> {
+  bool isExpanded = false;
+  bool isActive = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Flumpose Animations')),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Example 1: Animated padding and background color
+            Container(
+              color: Colors.grey[200],
+              child: const Text('Tap me!')
+                  .pad(isExpanded ? 40 : 20, animate: true)
+                  .backgroundColor(
+                    isExpanded ? Colors.blue : Colors.white,
+                    animate: true,
+                  )
+                  .animate(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeOut,
+                  ),
+            ).padV(20),
+
+            // Example 2: Animated text with different animation
+            'Hello World'
+                .animatedText()
+                .fontSize(isActive ? 32 : 20)
+                .color(isActive ? Colors.blue : Colors.grey)
+                .bold()
+                .animate(
+                  duration: const Duration(milliseconds: 500),
+                  curve: Curves.elasticOut,
+                ),
+
+            const SizedBox(height: 20),
+
+            // Example 3: Animated icon
+            Icons.favorite
+                .animatedIcon()
+                .iconColor(isActive ? Colors.red : Colors.grey)
+                .iconSize(isActive ? 48 : 32)
+                .animate(
+                  duration: const Duration(milliseconds: 200),
+                  curve: Curves.easeInOut,
+                ),
+
+            const SizedBox(height: 40),
+
+            // Example 4: Multiple animations on same widget
+            Container(width: 100, height: 100, color: Colors.green)
+                .pad(isExpanded ? 20 : 10, animate: true)
+                .animate(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeOut,
+                )
+                .backgroundColor(
+                  isActive ? Colors.purple : Colors.orange,
+                  animate: true,
+                )
+                .animate(
+                  duration: const Duration(milliseconds: 1000),
+                  curve: Curves.linear,
+                ),
+
+            const SizedBox(height: 40),
+
+            // Control buttons
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () => setState(() => isExpanded = !isExpanded),
+                  child: Text(isExpanded ? 'Collapse' : 'Expand'),
+                ),
+                const SizedBox(width: 20),
+                ElevatedButton(
+                  onPressed: () => setState(() => isActive = !isActive),
+                  child: Text(isActive ? 'Deactivate' : 'Activate'),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'animation_extensions.dart';
 
 /// Const-optimized padding values for reuse across the app
 /// These reduce memory allocation by reusing const EdgeInsets instances
@@ -33,159 +34,200 @@ class ConstPadding {
 extension PaddingExtension on Widget {
   /// Add padding with double value - optimized to reuse const EdgeInsets for common values
   /// Common optimized values: 0, 2, 4, 8, 12, 16, 20, 24, 32
-  Widget pad(double value) {
-    // Reuse const EdgeInsets for common values (performance optimization)
-    EdgeInsets padding;
+  /// Set [animate] to true to animate padding changes
+  Widget pad(double value, {bool animate = false}) {
+    final EdgeInsets padding;
     switch (value) {
       case 0:
         padding = ConstPadding.zero;
-        break;
       case 2:
         padding = ConstPadding.all2;
-        break;
       case 4:
         padding = ConstPadding.all4;
-        break;
       case 8:
         padding = ConstPadding.all8;
-        break;
       case 12:
         padding = ConstPadding.all12;
-        break;
       case 16:
         padding = ConstPadding.all16;
-        break;
       case 20:
         padding = ConstPadding.all20;
-        break;
       case 24:
         padding = ConstPadding.all24;
-        break;
       case 32:
         padding = ConstPadding.all32;
-        break;
       default:
         padding = EdgeInsets.all(value);
     }
-    return Padding(padding: padding, child: this);
+
+    if (!animate) return Padding(padding: padding, child: this);
+
+    return AnimatedWrapper(
+      builder: (config) => AnimatedPadding(
+        padding: padding,
+        duration: config.duration,
+        curve: config.curve,
+        child: this,
+      ),
+    );
   }
 
   /// Add padding with EdgeInsets - use for custom padding configurations
-  Widget padding(EdgeInsets value) => Padding(padding: value, child: this);
+  /// Set [animate] to true to animate padding changes
+  Widget padding(EdgeInsets value, {bool animate = false}) {
+    if (!animate) return Padding(padding: value, child: this);
+
+    return AnimatedWrapper(
+      builder: (config) => AnimatedPadding(
+        padding: value,
+        duration: config.duration,
+        curve: config.curve,
+        child: this,
+      ),
+    );
+  }
 
   /// Horizontal padding - optimized for common values
-  Widget padH(double value) {
-    EdgeInsets padding;
+  /// Set [animate] to true to animate padding changes
+  Widget padH(double value, {bool animate = false}) {
+    final EdgeInsets padding;
     switch (value) {
       case 4:
         padding = ConstPadding.h4;
-        break;
       case 8:
         padding = ConstPadding.h8;
-        break;
       case 12:
         padding = ConstPadding.h12;
-        break;
       case 16:
         padding = ConstPadding.h16;
-        break;
       case 20:
         padding = ConstPadding.h20;
-        break;
       case 24:
         padding = ConstPadding.h24;
-        break;
       default:
         padding = EdgeInsets.symmetric(horizontal: value);
     }
-    return Padding(padding: padding, child: this);
+
+    if (!animate) return Padding(padding: padding, child: this);
+
+    return AnimatedWrapper(
+      builder: (config) => AnimatedPadding(
+        padding: padding,
+        duration: config.duration,
+        curve: config.curve,
+        child: this,
+      ),
+    );
   }
 
   /// Vertical padding - optimized for common values
-  Widget padV(double value) {
-    EdgeInsets padding;
+  /// Set [animate] to true to animate padding changes
+  Widget padV(double value, {bool animate = false}) {
+    final EdgeInsets padding;
     switch (value) {
       case 4:
         padding = ConstPadding.v4;
-        break;
       case 8:
         padding = ConstPadding.v8;
-        break;
       case 12:
         padding = ConstPadding.v12;
-        break;
       case 16:
         padding = ConstPadding.v16;
-        break;
       case 20:
         padding = ConstPadding.v20;
-        break;
       case 24:
         padding = ConstPadding.v24;
-        break;
       default:
         padding = EdgeInsets.symmetric(vertical: value);
     }
-    return Padding(padding: padding, child: this);
+
+    if (!animate) return Padding(padding: padding, child: this);
+
+    return AnimatedWrapper(
+      builder: (config) => AnimatedPadding(
+        padding: padding,
+        duration: config.duration,
+        curve: config.curve,
+        child: this,
+      ),
+    );
   }
 
   /// Symmetric padding
-  Widget padSymmetric({double? horizontal, double? vertical}) => Padding(
-    padding: EdgeInsets.symmetric(
+  /// Set [animate] to true to animate padding changes
+  Widget padSymmetric({
+    double? horizontal,
+    double? vertical,
+    bool animate = false,
+  }) {
+    final padding = EdgeInsets.symmetric(
       horizontal: horizontal ?? 0,
       vertical: vertical ?? 0,
-    ),
-    child: this,
-  );
+    );
+
+    if (!animate) return Padding(padding: padding, child: this);
+
+    return AnimatedWrapper(
+      builder: (config) => AnimatedPadding(
+        padding: padding,
+        duration: config.duration,
+        curve: config.curve,
+        child: this,
+      ),
+    );
+  }
 
   /// Specific side padding
+  /// Set [animate] to true to animate padding changes
   Widget padOnly({
     double left = 0,
     double top = 0,
     double right = 0,
     double bottom = 0,
-  }) => Padding(
-    padding: EdgeInsets.only(
+    bool animate = false,
+  }) {
+    final padding = EdgeInsets.only(
       left: left,
       top: top,
       right: right,
       bottom: bottom,
-    ),
-    child: this,
-  );
+    );
+
+    if (!animate) return Padding(padding: padding, child: this);
+
+    return AnimatedWrapper(
+      builder: (config) => AnimatedPadding(
+        padding: padding,
+        duration: config.duration,
+        curve: config.curve,
+        child: this,
+      ),
+    );
+  }
 }
 
 extension MarginExtension on Widget {
   /// Add margin with double value - optimized to reuse const EdgeInsets for common values
   /// Common optimized values: 0, 4, 8, 12, 16, 20, 24, 32
   Widget margin(double value) {
-    // Reuse const EdgeInsets for performance
-    EdgeInsets edgeInsets;
+    final EdgeInsets edgeInsets;
     switch (value) {
       case 0:
         edgeInsets = ConstPadding.zero;
-        break;
       case 4:
         edgeInsets = ConstPadding.all4;
-        break;
       case 8:
         edgeInsets = ConstPadding.all8;
-        break;
       case 12:
         edgeInsets = ConstPadding.all12;
-        break;
       case 16:
         edgeInsets = ConstPadding.all16;
-        break;
       case 20:
         edgeInsets = ConstPadding.all20;
-        break;
       case 24:
         edgeInsets = ConstPadding.all24;
-        break;
       case 32:
         edgeInsets = ConstPadding.all32;
-        break;
       default:
         edgeInsets = EdgeInsets.all(value);
     }
@@ -197,26 +239,20 @@ extension MarginExtension on Widget {
 
   /// Horizontal margin - optimized for common values
   Widget marginH(double value) {
-    EdgeInsets margin;
+    final EdgeInsets margin;
     switch (value) {
       case 4:
         margin = ConstPadding.h4;
-        break;
       case 8:
         margin = ConstPadding.h8;
-        break;
       case 12:
         margin = ConstPadding.h12;
-        break;
       case 16:
         margin = ConstPadding.h16;
-        break;
       case 20:
         margin = ConstPadding.h20;
-        break;
       case 24:
         margin = ConstPadding.h24;
-        break;
       default:
         margin = EdgeInsets.symmetric(horizontal: value);
     }
@@ -225,26 +261,20 @@ extension MarginExtension on Widget {
 
   /// Vertical margin - optimized for common values
   Widget marginV(double value) {
-    EdgeInsets margin;
+    final EdgeInsets margin;
     switch (value) {
       case 4:
         margin = ConstPadding.v4;
-        break;
       case 8:
         margin = ConstPadding.v8;
-        break;
       case 12:
         margin = ConstPadding.v12;
-        break;
       case 16:
         margin = ConstPadding.v16;
-        break;
       case 20:
         margin = ConstPadding.v20;
-        break;
       case 24:
         margin = ConstPadding.v24;
-        break;
       default:
         margin = EdgeInsets.symmetric(vertical: value);
     }
@@ -273,33 +303,101 @@ extension MarginExtension on Widget {
 }
 
 extension AlignmentExtension on Widget {
-  Widget align(Alignment alignment) => Align(alignment: alignment, child: this);
-  Widget alignCenter() => Align(alignment: Alignment.center, child: this);
-  Widget alignTopLeft() => Align(alignment: Alignment.topLeft, child: this);
-  Widget alignTopCenter() => Align(alignment: Alignment.topCenter, child: this);
-  Widget alignTopRight() => Align(alignment: Alignment.topRight, child: this);
-  Widget alignCenterLeft() =>
-      Align(alignment: Alignment.centerLeft, child: this);
-  Widget alignCenterRight() =>
-      Align(alignment: Alignment.centerRight, child: this);
-  Widget alignBottomLeft() =>
-      Align(alignment: Alignment.bottomLeft, child: this);
-  Widget alignBottomCenter() =>
-      Align(alignment: Alignment.bottomCenter, child: this);
-  Widget alignBottomRight() =>
-      Align(alignment: Alignment.bottomRight, child: this);
+  /// Set [animate] to true to animate alignment changes
+  Widget align(Alignment alignment, {bool animate = false}) {
+    if (!animate) return Align(alignment: alignment, child: this);
+
+    return AnimatedWrapper(
+      builder: (config) => AnimatedAlign(
+        alignment: alignment,
+        duration: config.duration,
+        curve: config.curve,
+        child: this,
+      ),
+    );
+  }
+
+  Widget alignCenter({bool animate = false}) =>
+      align(Alignment.center, animate: animate);
+  Widget alignTopLeft({bool animate = false}) =>
+      align(Alignment.topLeft, animate: animate);
+  Widget alignTopCenter({bool animate = false}) =>
+      align(Alignment.topCenter, animate: animate);
+  Widget alignTopRight({bool animate = false}) =>
+      align(Alignment.topRight, animate: animate);
+  Widget alignCenterLeft({bool animate = false}) =>
+      align(Alignment.centerLeft, animate: animate);
+  Widget alignCenterRight({bool animate = false}) =>
+      align(Alignment.centerRight, animate: animate);
+  Widget alignBottomLeft({bool animate = false}) =>
+      align(Alignment.bottomLeft, animate: animate);
+  Widget alignBottomCenter({bool animate = false}) =>
+      align(Alignment.bottomCenter, animate: animate);
+  Widget alignBottomRight({bool animate = false}) =>
+      align(Alignment.bottomRight, animate: animate);
 }
 
 extension SizeExtensions on Widget {
-  Widget width(double w) => SizedBox(width: w, child: this);
-  Widget height(double h) => SizedBox(height: h, child: this);
-  Widget size(double w, double h) => SizedBox(width: w, height: h, child: this);
+  /// Set [animate] to true to animate size changes
+  Widget width(double w, {bool animate = false}) {
+    if (!animate) return SizedBox(width: w, child: this);
+
+    return AnimatedWrapper(
+      builder: (config) => AnimatedContainer(
+        width: w,
+        duration: config.duration,
+        curve: config.curve,
+        child: this,
+      ),
+    );
+  }
+
+  /// Set [animate] to true to animate size changes
+  Widget height(double h, {bool animate = false}) {
+    if (!animate) return SizedBox(height: h, child: this);
+
+    return AnimatedWrapper(
+      builder: (config) => AnimatedContainer(
+        height: h,
+        duration: config.duration,
+        curve: config.curve,
+        child: this,
+      ),
+    );
+  }
+
+  /// Set [animate] to true to animate size changes
+  Widget size(double w, double h, {bool animate = false}) {
+    if (!animate) return SizedBox(width: w, height: h, child: this);
+
+    return AnimatedWrapper(
+      builder: (config) => AnimatedContainer(
+        width: w,
+        height: h,
+        duration: config.duration,
+        curve: config.curve,
+        child: this,
+      ),
+    );
+  }
+
   Widget constrained(BoxConstraints constraints) =>
       ConstrainedBox(constraints: constraints, child: this);
 
   /// Create a square-sized box (specific dimension)
-  Widget squareBox(double size) =>
-      SizedBox.square(dimension: size, child: this);
+  Widget squareBox(double size, {bool animate = false}) {
+    if (!animate) return SizedBox.square(dimension: size, child: this);
+
+    return AnimatedWrapper(
+      builder: (config) => AnimatedContainer(
+        width: size,
+        height: size,
+        duration: config.duration,
+        curve: config.curve,
+        child: this,
+      ),
+    );
+  }
 }
 
 extension OverflowExtension on Widget {

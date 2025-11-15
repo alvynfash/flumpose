@@ -1,3 +1,20 @@
+## [0.0.7+1]
+Adds comprehensive context extensions for cleaner code.
+
+### Added
+**Context Extensions** - 60+ BuildContext helpers with performance optimizations:
+- Screen: `context.width`, `context.height`, `context.isMobile`, `context.isTablet`, `context.isDesktop`
+- Theme: `context.primaryColor`, `context.textTheme`, `context.isDarkMode`
+- Text styles: All Material 3 styles (`displayLarge`, `headlineMedium`, `bodySmall`, etc.)
+- MediaQuery: Uses `sizeOf`, `paddingOf` for granular rebuilds (better performance)
+- Utilities: `context.unfocus()`, `context.showSnackBar()`, `context.showBottomSheet()`
+- Responsive: `context.responsiveValue<T>({mobile, tablet, desktop})`
+
+### Changed
+- Consolidated all BuildContext extensions into `context_extensions.dart`
+- Moved `ResponsiveContext` from `responsive_extensions.dart` (better organization)
+- Removed `Breakpoint.isMobile(context)` static methods - use `context.isMobile` instead
+
 ## [0.0.7]
 Introduces a comprehensive animation system, allowing you to animate widget properties without managing controllers.
 

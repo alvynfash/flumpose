@@ -575,6 +575,74 @@ Text('Styled!').styled(
 
 > **Tip:** `.styled()` is most useful when setting multiple style properties at once. For single property changes, chaining remains convenient and expressive.
 
+### Context Extensions
+
+Access common properties and utilities directly from `BuildContext` with performance-optimized extensions.
+
+**Screen Size & Responsive:**
+- `context.width`, `context.height` - Screen dimensions (uses `MediaQuery.sizeOf`)
+- `context.screenSize` - Full screen size
+- `context.shortestSide`, `context.longestSide` - Screen dimensions
+- `context.screenWidth`, `context.screenHeight` - Full screen dimensions
+- `context.isPortrait`, `context.isLandscape` - Orientation checks
+- `context.isMobile`, `context.isTablet`, `context.isDesktop` - Device type checks (width-based)
+- `context.responsiveValue<T>({mobile, tablet, desktop})` - Get value based on screen size
+
+**Theme Access:**
+- `context.theme` - ThemeData
+- `context.colorScheme` - ColorScheme
+- `context.textTheme` - TextTheme
+- `context.primaryColor`, `context.secondaryColor` - Quick color access
+- `context.backgroundColor`, `context.surfaceColor`, `context.errorColor`
+- `context.isDarkMode`, `context.isLightMode` - Brightness checks
+
+**Text Styles:**
+- Display: `context.displayLarge`, `context.displayMedium`, `context.displaySmall`
+- Headline: `context.headlineLarge`, `context.headlineMedium`, `context.headlineSmall`
+- Title: `context.titleLarge`, `context.titleMedium`, `context.titleSmall`
+- Body: `context.bodyLarge`, `context.bodyMedium`, `context.bodySmall`
+- Label: `context.labelLarge`, `context.labelMedium`, `context.labelSmall`
+
+**MediaQuery (Performance Optimized):**
+- `context.padding` - Safe area insets (uses `MediaQuery.paddingOf`)
+- `context.viewInsets` - Keyboard height, etc. (uses `MediaQuery.viewInsetsOf`)
+- `context.devicePixelRatio` - Device pixel ratio (uses `MediaQuery.devicePixelRatioOf`)
+- `context.textScaleFactor` - Text scale factor (uses `MediaQuery.textScaleFactorOf`)
+- `context.orientation` - Screen orientation (uses `MediaQuery.orientationOf`)
+
+**Utilities:**
+- `context.unfocus()` - Dismiss keyboard
+- `context.showSnackBar(message)` - Show snackbar
+- `context.showBottomSheet(builder)` - Show bottom sheet
+- `context.showMaterialDialog(builder)` - Show dialog
+
+**Example:**
+```dart
+// Before
+Text('Hello', style: Theme.of(context).textTheme.headlineMedium)
+Container(width: MediaQuery.of(context).size.width)
+
+// After
+Text('Hello', style: context.headlineMedium)
+Container(width: context.width)
+
+// Responsive values
+Container(
+  color: context.responsiveValue(
+    mobile: Colors.red,
+    tablet: Colors.green,
+    desktop: Colors.blue,
+  ),
+)
+
+// Show snackbar
+context.showSnackBar('Hello!', backgroundColor: context.primaryColor)
+```
+
+**Performance Notes:**
+- Uses Flutter's recommended `MediaQuery.sizeOf`, `paddingOf`, etc. for better performance
+- Only rebuilds when specific properties change (not all MediaQuery changes)
+- Zero overhead - direct access to existing Flutter APIs
 
 ### Animation Extensions
 
@@ -631,8 +699,6 @@ Container()
 - Uses single `AnimatedWrapper` instead of multiple `Builder` widgets
 - Leverages Flutter's built-in `AnimatedContainer`, `AnimatedPadding`, etc.
 - Const EdgeInsets optimization preserved even when animated
-
-See [ANIMATIONS.md](ANIMATIONS.md) for detailed documentation.
 
 ### Semantics Extensions
 - `semanticsLabel(String, {excludeSemantics})` - Add semantic label
@@ -741,9 +807,9 @@ See [ANIMATIONS.md](ANIMATIONS.md) for detailed documentation.
 - Sliver extensions [x]
 - Material/Card wrappers [x]
 - Built-in animations [x]
+- Context helpers [x]
 - Theme-aware helpers
 - Form and input extensions
-- Custom animation builders
 
 ### Future Considerations
 - More layout helpers (Wrap, Flow, etc.)

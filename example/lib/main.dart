@@ -1924,3 +1924,212 @@ class _AnimationExamplePageState extends State<AnimationExamplePage> {
     );
   }
 }
+
+class ContextExampleApp extends StatelessWidget {
+  const ContextExampleApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flumpose Context Extensions',
+      theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
+      darkTheme: ThemeData.dark(useMaterial3: true),
+      home: const ContextExamplePage(),
+    );
+  }
+}
+
+class ContextExamplePage extends StatelessWidget {
+  const ContextExamplePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Context Extensions'),
+        backgroundColor: context.primaryColor,
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Screen Size Section
+            _buildSection(context, 'Screen Size', [
+              'Width: ${context.width.toStringAsFixed(1)}',
+              'Height: ${context.height.toStringAsFixed(1)}',
+              'Shortest Side: ${context.shortestSide.toStringAsFixed(1)}',
+              'Longest Side: ${context.longestSide.toStringAsFixed(1)}',
+            ]),
+
+            // Device Type Section
+            _buildSection(context, 'Device Type', [
+              'Is Mobile: ${context.isMobile}',
+              'Is Tablet: ${context.isTablet}',
+              'Is Desktop: ${context.isDesktop}',
+              'Is Portrait: ${context.isPortrait}',
+              'Is Landscape: ${context.isLandscape}',
+            ]),
+
+            // Theme Section
+            _buildSection(context, 'Theme Colors', [
+              'Primary: ${context.primaryColor}',
+              'Secondary: ${context.secondaryColor}',
+              'Background: ${context.backgroundColor}',
+              'Surface: ${context.surfaceColor}',
+              'Is Dark Mode: ${context.isDarkMode}',
+            ]),
+
+            // Text Styles Section
+            _buildSection(
+              context,
+              'Text Styles',
+              [],
+              children: [
+                Text('Display Large', style: context.displayLarge),
+                Text('Headline Medium', style: context.headlineMedium),
+                Text('Title Large', style: context.titleLarge),
+                Text('Body Medium', style: context.bodyMedium),
+                Text('Label Small', style: context.labelSmall),
+              ],
+            ),
+
+            // Responsive Value Section
+            Container(
+              width: context.width,
+              height: 200,
+              color: context.responsiveValue(
+                mobile: Colors.red.withValues(alpha: 0.3),
+                tablet: Colors.green.withValues(alpha: 0.3),
+                desktop: Colors.blue.withValues(alpha: 0.3),
+              ),
+              child: Center(
+                child: Text(
+                  context.responsiveValue(
+                    mobile: 'Mobile View',
+                    tablet: 'Tablet View',
+                    desktop: 'Desktop View',
+                  ),
+                  style: context.headlineMedium,
+                ),
+              ),
+            ).pad(16),
+
+            // Interactive Buttons Section
+            _buildSection(
+              context,
+              'Interactive Examples',
+              [],
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    context.showSnackBar(
+                      'Hello from Flumpose!',
+                      backgroundColor: context.primaryColor,
+                    );
+                  },
+                  child: const Text('Show SnackBar'),
+                ),
+                const SizedBox(height: 8),
+                ElevatedButton(
+                  onPressed: () {
+                    context.showBottomSheet(
+                      builder: (ctx) => Container(
+                        padding: const EdgeInsets.all(24),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text('Bottom Sheet', style: ctx.titleLarge),
+                            const SizedBox(height: 16),
+                            const Text('This is a bottom sheet example'),
+                            const SizedBox(height: 16),
+                            ElevatedButton(
+                              onPressed: () => Navigator.pop(ctx),
+                              child: const Text('Close'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                  child: const Text('Show Bottom Sheet'),
+                ),
+                const SizedBox(height: 8),
+                ElevatedButton(
+                  onPressed: () {
+                    context.showMaterialDialog(
+                      builder: (ctx) => AlertDialog(
+                        title: const Text('Dialog'),
+                        content: const Text('This is a dialog example'),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(ctx),
+                            child: const Text('Close'),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  child: const Text('Show Dialog'),
+                ),
+                const SizedBox(height: 8),
+                ElevatedButton(
+                  onPressed: () => context.unfocus(),
+                  child: const Text('Dismiss Keyboard'),
+                ),
+              ],
+            ),
+
+            // Padding Info Section
+            _buildSection(context, 'Safe Area Padding', [
+              'Top: ${context.padding.top}',
+              'Bottom: ${context.padding.bottom}',
+              'Left: ${context.padding.left}',
+              'Right: ${context.padding.right}',
+            ]),
+
+            const SizedBox(height: 32),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSection(
+    BuildContext context,
+    String title,
+    List<String> items, {
+    List<Widget>? children,
+  }) {
+    return Container(
+      width: context.width,
+      margin: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: context.surfaceColor,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: context.dividerColor),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: context.titleLarge?.copyWith(
+              color: context.primaryColor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 12),
+          if (items.isNotEmpty)
+            ...items.map(
+              (item) => Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                child: Text(item, style: context.bodyMedium),
+              ),
+            ),
+          if (children != null) ...children,
+        ],
+      ),
+    );
+  }
+}

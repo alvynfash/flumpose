@@ -119,8 +119,10 @@ extension ResponsiveExtensions on Widget {
   );
 }
 
-/// Breakpoint helper for responsive design
+/// Breakpoint constants for responsive design
 class Breakpoint {
+  const Breakpoint._();
+
   static const double mobile = 600;
   static const double tablet = 900;
   static const double desktop = 1200;
@@ -133,47 +135,7 @@ class Breakpoint {
     if (width < desktop) return BreakpointCategory.desktop;
     return BreakpointCategory.large;
   }
-
-  /// Checks if current screen is mobile
-  static bool isMobile(BuildContext context) =>
-      MediaQuery.of(context).size.width < mobile;
-
-  /// Checks if current screen is tablet
-  static bool isTablet(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    return width >= mobile && width < tablet;
-  }
-
-  /// Checks if current screen is desktop
-  static bool isDesktop(BuildContext context) =>
-      MediaQuery.of(context).size.width >= tablet;
 }
 
 /// Screen size categories
 enum BreakpointCategory { mobile, tablet, desktop, large }
-
-/// Extension on BuildContext for responsive helpers
-extension ResponsiveContext on BuildContext {
-  /// Gets screen width
-  double get screenWidth => MediaQuery.of(this).size.width;
-
-  /// Gets screen height
-  double get screenHeight => MediaQuery.of(this).size.height;
-
-  /// Checks if screen is mobile
-  bool get isMobile => screenWidth < Breakpoint.mobile;
-
-  /// Checks if screen is tablet
-  bool get isTablet =>
-      screenWidth >= Breakpoint.mobile && screenWidth < Breakpoint.tablet;
-
-  /// Checks if screen is desktop
-  bool get isDesktop => screenWidth >= Breakpoint.tablet;
-
-  /// Gets responsive value based on screen size
-  T responsiveValue<T>({required T mobile, T? tablet, T? desktop}) {
-    if (isDesktop && desktop != null) return desktop;
-    if (isTablet && tablet != null) return tablet;
-    return mobile;
-  }
-}

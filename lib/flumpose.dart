@@ -10,6 +10,7 @@ export 'src/text_extensions.dart';
 export 'src/animation_extensions.dart';
 export 'src/parent_extensions.dart';
 export 'src/semantics_extensions.dart';
+export 'src/context_extensions.dart';
 
 // New feature extensions
 export 'src/visibility_extensions.dart';

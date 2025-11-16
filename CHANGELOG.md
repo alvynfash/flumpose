@@ -1,3 +1,17 @@
+## [0.0.8]
+Adds form and input extensions with chainable FormInput widget.
+
+### Added
+**Form Extensions** - Chainable form field composition:
+- `FormInput()` - Chainable TextFormField wrapper (works like Text extensions)
+- `.label(String)` - Add label text
+- `.hint(String)` - Add hint text
+- `.prefixIcon(IconData)` - Add prefix icon
+- `.suffixIcon(IconData)` - Add suffix icon
+- `.withValidator(validator)` - Add validator
+- `.form({formKey, autovalidateMode})` - Wrap any widget in Form
+- `Validators` class with common validators: `required`, `email`, `phone`, `url`, `minLength`, `maxLength`, `numberRange`, `combine`
+
 ## [0.0.7+1]
 Adds comprehensive context extensions for cleaner code.
 

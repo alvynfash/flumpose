@@ -128,7 +128,7 @@ Add `flumpose` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  flumpose: ^0.0.4  # ⚡ Const-optimized for performance
+  flumpose: ^0.0.8  # ⚡ Const-optimized for performance
 ```
 
 Then run:
@@ -306,6 +306,79 @@ Content().safeArea()
 Image.network('photo.jpg').hero(tag: 'photo')
 Content().card(elevation: 4)
 [Widget1(), Widget2()].toSliverList()
+```
+
+#### Forms & Input
+
+```dart
+// FormInput - chainable like Text! (Flumpose pattern)
+const FormInput()
+  .label('Email')
+  .hint('Enter your email')
+  .prefixIcon(Icons.email)
+  .withValidator(Validators.email)
+  .pad(16)
+  .backgroundColor(Colors.white)
+
+const FormInput()
+  .label('Search')
+  .prefixIcon(Icons.search)
+  .hint('Search...')
+  .pad(8)
+  .borderRadius(BorderRadius.circular(24))
+
+const FormInput()
+  .label('Password')
+  .prefixIcon(Icons.lock)
+  .suffixIcon(Icons.visibility)
+  .pad(16)
+
+// Form wrapper
+Column(
+  children: [
+    const FormInput().label('Email').prefixIcon(Icons.email),
+    const FormInput().label('Password').prefixIcon(Icons.lock),
+    ElevatedButton(
+      onPressed: () {
+        if (formKey.currentState!.validate()) {
+          formKey.currentState!.save();
+        }
+      },
+      child: Text('Submit'),
+    ),
+  ],
+).form(formKey: formKey)
+
+// Custom validators
+const FormInput()
+  .label('Email')
+  .withValidator(Validators.combine([
+    (v) => Validators.required(v),
+    (v) => Validators.minLength(v, 8),
+    (v) => Validators.email(v),
+  ]))
+
+const FormInput()
+  .label('Age')
+  .withValidator((v) => Validators.numberRange(v, min: 18, max: 100))
+
+// Custom validators
+TextFormField(
+  validator: Validators.combine([
+    (v) => Validators.required(v),
+    (v) => Validators.minLength(v, 8),
+    (v) => Validators.email(v),
+  ]),
+)
+
+// Individual validators
+TextFormField(
+  validator: (v) => Validators.email(v, required: true),
+)
+
+TextFormField(
+  validator: (v) => Validators.numberRange(v, min: 0, max: 100),
+)
 ```
 
 **💡 Tip**: See the [Flumpose example](https://pub.dev/packages/flumpose/example) for complete, interactive demonstrations of all features!
@@ -703,6 +776,29 @@ Container()
 ### Semantics Extensions
 - `semanticsLabel(String, {excludeSemantics})` - Add semantic label
 
+### Form & Input Extensions
+
+**Form Wrapper:**
+- `form({formKey, autovalidateMode, onChanged})` - Wrap in Form widget
+
+**FormInput (Chainable TextFormField):**
+- `FormInput()` - Create a chainable form field (like Text but for forms)
+- `.label(String)` - Add label text
+- `.hint(String)` - Add hint text
+- `.prefixIcon(IconData)` - Add prefix icon
+- `.suffixIcon(IconData)` - Add suffix icon
+- `.withValidator(validator)` - Add validator
+
+**Validators Class:**
+- `Validators.required(value, {message})` - Required field
+- `Validators.email(value, {required})` - Email validation
+- `Validators.minLength(value, length, {message})` - Min length
+- `Validators.maxLength(value, length, {message})` - Max length
+- `Validators.numberRange(value, {min, max})` - Number range
+- `Validators.phone(value, {required})` - Phone validation
+- `Validators.url(value, {required})` - URL validation
+- `Validators.combine(validators)` - Combine multiple validators
+
 ### Parent Extensions
 - `parent(Widget Function(Widget))` - Wrap with custom parent
 
@@ -797,19 +893,19 @@ Container()
 ## 🗺️ Roadmap
 
 ### Version 0.1.0 (Planned)
-- Visibility extensions (`visible()`, `hide()`, `opacity()`) [x]
-- Flex/Expanded helpers [x]
-- Hero animation support [x]
-- SafeArea and MediaQuery helpers [x]
-- Positioned and Stack helpers [x]
-- Responsive layout helpers [x]
-- Advanced gesture types (pan, drag, scale) [x]
-- Sliver extensions [x]
-- Material/Card wrappers [x]
-- Built-in animations [x]
-- Context helpers [x]
+- Visibility extensions (`visible()`, `hide()`, `opacity()`) ✅
+- Flex/Expanded helpers ✅
+- Hero animation support ✅
+- SafeArea and MediaQuery helpers ✅
+- Positioned and Stack helpers ✅
+- Responsive layout helpers ✅
+- Advanced gesture types (pan, drag, scale) ✅
+- Sliver extensions ✅
+- Material/Card wrappers ✅
+- Built-in animations ✅
+- Context helpers ✅
+- Form and input extensions ✅
 - Theme-aware helpers
-- Form and input extensions
 
 ### Future Considerations
 - More layout helpers (Wrap, Flow, etc.)

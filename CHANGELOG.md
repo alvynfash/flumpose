@@ -1,3 +1,81 @@
+## [0.0.9]
+Comprehensive update adding list builders, loading states, tooltips, badges, conditional rendering, blur effects, ink interactions, fractional translations, wrap layouts, tables, and custom layout helpers.
+
+### Added
+**List Extensions** - Quick Column/Row builders:
+- `[widgets].toColumn({spacing, alignment, ...})` - Convert list to Column with spacing
+- `[widgets].toRow({spacing, alignment, ...})` - Convert list to Row with spacing
+
+**Loading Extensions** - Shimmer and skeleton effects:
+- `.shimmer({baseColor, highlightColor, duration})` - Animated shimmer loading
+- `.skeleton({color, borderRadius})` - Static skeleton loading
+
+**Tooltip Extensions** - Easy tooltips:
+- `.tooltip(String, {decoration, constraints, ...})` - Wrap widget in Tooltip
+
+**Badge Extensions** - Add badges to widgets:
+- `.badge({label, count, backgroundColor, ...})` - Add badge with optional count
+- `.dotBadge({color, size, ...})` - Simple dot badge
+- `.notificationBadge(count)` - Notification badge with count
+
+**Conditional Extensions** - Conditional widget transformations:
+- `.when(condition, transform)` - Apply transformation conditionally
+- `.conditional(condition, {onTrue, onFalse})` - Different transformations based on condition
+- `.loadingState({isLoading, loadingWidget})` - Show loading state
+- `.errorState({hasError, errorWidget})` - Show error state
+- `.emptyState({isEmpty, emptyWidget})` - Show empty state
+- `.switchState({state, cases, defaultCase})` - Switch between multiple states
+
+**Blur Extensions** - Blur and frosted glass effects:
+- `.blur({sigmaX, sigmaY})` - Apply blur effect
+- `.backdropBlur({sigma, overlayColor})` - Backdrop blur (frosted glass)
+- `.frostedGlass({sigma, color, opacity})` - Frosted glass with overlay
+- `.blurRounded({sigma, borderRadius})` - Blur with rounded corners
+
+**Ink Extensions** - Material ink effects:
+- `.inkWell({onTap, splashColor, ...})` - Wrap in InkWell
+- `.ink({color, decoration, ...})` - Wrap in Ink
+- `.inkTap({onTap, color, ...})` - Ink with tap handler
+- `.inkDecoration({onTap, decoration, ...})` - Ink with decoration
+- `.inkResponse({onTap, splashColor, ...})` - Material ink response
+
+**Fractional Extensions** - Fractional translations and slide animations:
+- `.fractionalTranslate({x, y})` - Translate by fraction of widget size
+- `.fractionalTranslateX(x)`, `.fractionalTranslateY(y)` - Directional translations
+- `.slideFromLeft(progress)`, `.slideFromRight(progress)` - Horizontal slides
+- `.slideFromTop(progress)`, `.slideFromBottom(progress)` - Vertical slides
+
+**Wrap Extensions** - Flexible wrapping layouts:
+- `[widgets].toWrap({direction, alignment, spacing, runSpacing, ...})` - Convert list to Wrap widget
+- `[widgets].toHorizontalWrap({spacing, runSpacing, alignment})` - Quick horizontal wrap
+- `[widgets].toVerticalWrap({spacing, runSpacing, alignment})` - Quick vertical wrap
+- `[widgets].toFlow({delegate, clipBehavior})` - Convert list to Flow with custom delegate
+- `.wrap({direction, alignment, spacing, ...})` - Wrap single widget in Wrap
+
+**Table Extensions** - Tabular layouts and list helpers:
+- `[[widgets]].toTable({columnWidths, border, ...})` - Convert 2D list to Table
+- `[[widgets]].toBorderedTable({borderColor, borderWidth, ...})` - Quick bordered table
+- `.listTile({leading, title, subtitle, trailing, onTap, ...})` - Wrap in ListTile
+- `.withDivider({height, thickness, color, ...})` - Add divider after widget
+- `[widgets].withDividers({height, thickness, color, ...})` - Insert dividers between list items
+- `[widgets].separated(Widget)` - Insert custom separator between list items
+
+**Custom Layout Extensions** - Advanced layout control:
+- `.layoutBuilder(builder)` - LayoutBuilder for responsive layouts
+- `.customLayout({delegate})` - CustomSingleChildLayout wrapper
+- `.offstage({offstage})` - Hide without removing from tree (zero-cost)
+- `.overflowBox({alignment, minWidth, maxWidth, ...})` - Overflow control
+- `.sizedOverflowBox({size, alignment})` - Sized overflow box
+- `.limitedBox({maxWidth, maxHeight})` - Limit size in unconstrained contexts
+- `.intrinsicHeight()` - IntrinsicHeight wrapper (use sparingly - expensive)
+- `.intrinsicWidth({stepWidth, stepHeight})` - IntrinsicWidth wrapper (use sparingly - expensive)
+- `.repaintBoundary()` - Isolate repaints for performance optimization
+- `.customPaint({painter, foregroundPainter, ...})` - Custom painting
+- `.physicalModel({color, elevation, shadowColor, ...})` - Elevation and shadows
+- `.physicalShape({shape, color, elevation, ...})` - Custom shaped elevation
+- `[widgets].toListView({scrollDirection, shrinkWrap, ...})` - Convert list to ListView
+- `[widgets].toGridView({crossAxisCount, spacing, ...})` - Convert list to GridView
+
 ## [0.0.8]
 Adds form and input extensions with chainable FormInput widget.
 

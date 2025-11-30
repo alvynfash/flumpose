@@ -90,6 +90,11 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
       builder: (context) => const UtilitiesExample(),
     ),
     ExampleSection(
+      title: 'Wrap & Layout',
+      icon: Icons.wrap_text,
+      builder: (context) => const WrapLayoutExample(),
+    ),
+    ExampleSection(
       title: 'Performance',
       icon: Icons.speed,
       builder: (context) => const PerformanceExample(),
@@ -2130,6 +2135,151 @@ class ContextExamplePage extends StatelessWidget {
           if (children != null) ...children,
         ],
       ),
+    );
+  }
+}
+
+// Wrap & Layout Example
+class WrapLayoutExample extends StatelessWidget {
+  const WrapLayoutExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: [
+        _buildSection(
+          'Wrap Layouts',
+          'Flexible wrapping for overflow content',
+          [
+            const Text('Horizontal Wrap with Chips:').bold().pad(8),
+            [
+              const Chip(label: Text('Flutter')),
+              const Chip(label: Text('Dart')),
+              const Chip(label: Text('Mobile')),
+              const Chip(label: Text('iOS')),
+              const Chip(label: Text('Android')),
+              const Chip(label: Text('Web')),
+            ].toWrap(spacing: 8, runSpacing: 8),
+            const SizedBox(height: 16),
+            const Text('Vertical Wrap:').bold().pad(8),
+            [
+              Container(width: 60, height: 60, color: Colors.red),
+              Container(width: 60, height: 60, color: Colors.blue),
+              Container(width: 60, height: 60, color: Colors.green),
+            ].toVerticalWrap(spacing: 8, runSpacing: 8),
+          ],
+        ),
+        _buildSection('Table Layouts', 'Tabular data from 2D lists', [
+          const Text('Simple Table:').bold().pad(8),
+          [
+            [
+              const Text('Name').bold(),
+              const Text('Age').bold(),
+              const Text('City').bold(),
+            ],
+            [const Text('Alice'), const Text('25'), const Text('NYC')],
+            [const Text('Bob'), const Text('30'), const Text('LA')],
+            [const Text('Charlie'), const Text('28'), const Text('SF')],
+          ].toBorderedTable(borderColor: Colors.grey),
+        ]),
+        _buildSection('List Helpers', 'Dividers and separators', [
+          const Text('List with Dividers:').bold().pad(8),
+          Column(
+            children: [
+              const ListTile(
+                leading: Icon(Icons.person),
+                title: Text('Profile'),
+              ),
+              const ListTile(
+                leading: Icon(Icons.settings),
+                title: Text('Settings'),
+              ),
+              const ListTile(
+                leading: Icon(Icons.logout),
+                title: Text('Logout'),
+              ),
+            ].withDividers(),
+          ).card(elevation: 2),
+          const SizedBox(height: 16),
+          const Text('Custom Separators:').bold().pad(8),
+          Column(
+            children: [
+              Container(height: 40, color: Colors.blue[100]),
+              Container(height: 40, color: Colors.blue[200]),
+              Container(height: 40, color: Colors.blue[300]),
+            ].separated(const SizedBox(height: 8)),
+          ),
+        ]),
+        _buildSection('Custom Layouts', 'Advanced layout control', [
+          const Text('LayoutBuilder:').bold().pad(8),
+          Container().layoutBuilder((context, constraints) {
+            return Text(
+                  'Available width: ${constraints.maxWidth.toStringAsFixed(0)}px',
+                )
+                .pad(16)
+                .backgroundColor(Colors.blue[50]!)
+                .borderRadius(BorderRadius.circular(8));
+          }),
+          const SizedBox(height: 16),
+          const Text('RepaintBoundary (Performance):').bold().pad(8),
+          Container(
+            width: 100,
+            height: 100,
+            color: Colors.purple[100],
+            child: const Center(child: Text('Isolated')),
+          ).repaintBoundary().pad(8),
+          const SizedBox(height: 16),
+          const Text('Offstage (Hidden but in tree):').bold().pad(8),
+          Row(
+            children: [
+              Container(width: 50, height: 50, color: Colors.green),
+              Container(width: 50, height: 50, color: Colors.red).offstage(),
+              Container(width: 50, height: 50, color: Colors.blue),
+            ],
+          ),
+        ]),
+        _buildSection(
+          'List to Scrollable',
+          'Convert lists to ListView/GridView',
+          [
+            const Text('ListView:').bold().pad(8),
+            [const Text('Item 1'), const Text('Item 2'), const Text('Item 3')]
+                .toListView(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                )
+                .height(120),
+            const SizedBox(height: 16),
+            const Text('GridView:').bold().pad(8),
+            [
+                  Container(color: Colors.red[200]),
+                  Container(color: Colors.blue[200]),
+                  Container(color: Colors.green[200]),
+                  Container(color: Colors.orange[200]),
+                ]
+                .toGridView(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 8,
+                )
+                .height(200),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSection(String title, String subtitle, List<Widget> children) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(title).fontSize(24).bold().pad(8),
+        Text(subtitle).color(Colors.grey[600]!).pad(8),
+        const Divider(),
+        ...children,
+        const SizedBox(height: 32),
+      ],
     );
   }
 }

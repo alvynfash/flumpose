@@ -308,6 +308,293 @@ Content().card(elevation: 4)
 [Widget1(), Widget2()].toSliverList()
 ```
 
+#### List Builders
+
+```dart
+// Convert list to Column with spacing
+[
+  Text('Item 1'),
+  Text('Item 2'),
+  Text('Item 3'),
+].toColumn(spacing: 16, alignment: MainAxisAlignment.start)
+
+// Convert list to Row with spacing
+[
+  Icon(Icons.home),
+  Icon(Icons.search),
+  Icon(Icons.settings),
+].toRow(spacing: 8, alignment: MainAxisAlignment.center)
+```
+
+#### Loading States
+
+```dart
+// Shimmer loading effect
+Container(width: 200, height: 100)
+  .shimmer(
+    baseColor: Colors.grey[300]!,
+    highlightColor: Colors.grey[100]!,
+    duration: Duration(seconds: 1),
+  )
+
+// Skeleton loading
+Container(width: 200, height: 20)
+  .skeleton(color: Colors.grey[300]!, borderRadius: BorderRadius.circular(4))
+```
+
+#### Tooltips
+
+```dart
+// Simple tooltip
+Icon(Icons.info).tooltip('More information')
+
+// Tooltip with custom styling
+Icon(Icons.help).tooltip(
+  'Help text',
+  decoration: BoxDecoration(color: Colors.blue),
+  constraints: BoxConstraints(maxWidth: 200),
+)
+```
+
+#### Badges
+
+```dart
+// Badge with count
+Icon(Icons.notifications).badge(count: 5)
+
+// Dot badge
+Icon(Icons.message).dotBadge(color: Colors.red, size: 8)
+
+// Notification badge
+Icon(Icons.shopping_cart).notificationBadge(3)
+
+// Custom badge
+Icon(Icons.email).badge(
+  label: Text('New'),
+  backgroundColor: Colors.red,
+  textColor: Colors.white,
+)
+```
+
+#### Conditional Rendering
+
+```dart
+// Apply transformation conditionally
+Container()
+  .when(isActive, (w) => w.backgroundColor(Colors.blue))
+
+// Different transformations based on condition
+Container().conditional(
+  isLoggedIn,
+  onTrue: (w) => w.backgroundColor(Colors.green),
+  onFalse: (w) => w.backgroundColor(Colors.grey),
+)
+
+// Loading state
+Content().loadingState(
+  isLoading: isLoading,
+  loadingWidget: CircularProgressIndicator(),
+)
+
+// Error state
+Content().errorState(
+  hasError: hasError,
+  errorWidget: Text('Error occurred'),
+)
+
+// Empty state
+ListView().emptyState(
+  isEmpty: items.isEmpty,
+  emptyWidget: Text('No items'),
+)
+
+// Switch between multiple states
+Container().switchState(
+  state: currentState,
+  cases: {
+    'loading': CircularProgressIndicator(),
+    'error': Text('Error'),
+    'success': Text('Success'),
+  },
+  defaultCase: Text('Unknown'),
+)
+```
+
+#### Blur Effects
+
+```dart
+// Simple blur
+Image.network('photo.jpg').blur(sigmaX: 5, sigmaY: 5)
+
+// Backdrop blur (frosted glass)
+Container().backdropBlur(sigma: 10, overlayColor: Colors.white.withOpacity(0.1))
+
+// Frosted glass effect
+Container().frostedGlass(
+  sigma: 10,
+  color: Colors.white,
+  opacity: 0.2,
+)
+
+// Blur with rounded corners
+Image.network('photo.jpg').blurRounded(
+  sigma: 8,
+  borderRadius: BorderRadius.circular(16),
+)
+```
+
+#### Ink Effects
+
+```dart
+// InkWell with tap
+Text('Tap me').inkWell(
+  onTap: () => print('Tapped'),
+  splashColor: Colors.blue.withOpacity(0.3),
+)
+
+// Ink with color
+Container(width: 100, height: 100).ink(color: Colors.blue)
+
+// Ink with tap handler
+Text('Click').inkTap(
+  onTap: () => print('Clicked'),
+  color: Colors.blue,
+  splashColor: Colors.white.withOpacity(0.3),
+)
+
+// Ink with decoration
+Container().inkDecoration(
+  onTap: () {},
+  decoration: BoxDecoration(
+    gradient: LinearGradient(colors: [Colors.blue, Colors.purple]),
+  ),
+)
+```
+
+#### Fractional Translations & Slides
+
+```dart
+// Translate by fraction of widget size
+Container().fractionalTranslate(x: 0.5, y: 0.2)
+
+// Directional translations
+Container().fractionalTranslateX(0.5)
+Container().fractionalTranslateY(-0.3)
+
+// Slide animations (progress 0.0 to 1.0)
+Container().slideFromLeft(animationProgress)
+Container().slideFromRight(animationProgress)
+Container().slideFromTop(animationProgress)
+Container().slideFromBottom(animationProgress)
+```
+
+#### Wrap & Layout Helpers
+
+```dart
+// Wrap widgets that overflow to next line
+[
+  Chip(label: Text('Flutter')),
+  Chip(label: Text('Dart')),
+  Chip(label: Text('Mobile')),
+].toWrap(spacing: 8, runSpacing: 8)
+
+// Horizontal wrap
+[
+  Chip(label: Text('Tag1')),
+  Chip(label: Text('Tag2')),
+].toHorizontalWrap(spacing: 8)
+
+// Vertical wrap
+[
+  Chip(label: Text('A')),
+  Chip(label: Text('B')),
+].toVerticalWrap(spacing: 8)
+
+// Wrap single widget
+Container().wrap(spacing: 8, alignment: WrapAlignment.center)
+```
+
+#### Table Layouts
+
+```dart
+// Table from 2D list
+[
+  [Text('Name'), Text('Age'), Text('City')],
+  [Text('Alice'), Text('25'), Text('NYC')],
+  [Text('Bob'), Text('30'), Text('LA')],
+].toTable()
+
+// Bordered table
+[
+  [Text('Name'), Text('Age')],
+  [Text('Alice'), Text('25')],
+].toBorderedTable(borderColor: Colors.grey, borderWidth: 1)
+
+// List with dividers
+[Item1(), Item2(), Item3()].withDividers()
+
+// Custom separator
+[Item1(), Item2(), Item3()].separated(Divider(color: Colors.blue))
+
+// ListTile wrapper
+Container().listTile(
+  leading: Icon(Icons.person),
+  title: Text('John Doe'),
+  subtitle: Text('john@example.com'),
+  trailing: Icon(Icons.arrow_forward),
+  onTap: () {},
+)
+```
+
+#### Custom Layout Helpers
+
+```dart
+// Layout builder for responsive layouts
+Container().layoutBuilder((context, constraints) =>
+  Text('Width: ${constraints.maxWidth}')
+)
+
+// Offstage (hide without removing from tree)
+ExpensiveWidget().offstage(offstage: !isVisible)
+
+// Overflow box
+Container().overflowBox(
+  alignment: Alignment.center,
+  maxWidth: 300,
+  maxHeight: 300,
+)
+
+// Limited box (for unconstrained contexts)
+Container().limitedBox(maxWidth: 500, maxHeight: 500)
+
+// Performance optimization with repaint boundary
+ExpensiveWidget().repaintBoundary()
+
+// Custom paint
+Container().customPaint(
+  painter: MyCustomPainter(),
+)
+
+// Physical model with elevation
+Container().physicalModel(
+  color: Colors.white,
+  elevation: 8,
+  shadowColor: Colors.black,
+)
+
+// Convert list to ListView
+[Item1(), Item2(), Item3()].toListView(
+  scrollDirection: Axis.vertical,
+  shrinkWrap: true,
+)
+
+// Convert list to GridView
+[Item1(), Item2(), Item3(), Item4()].toGridView(
+  crossAxisCount: 2,
+  spacing: 8,
+)
+```
+
 #### Forms & Input
 
 ```dart
@@ -870,6 +1157,70 @@ Container()
 - `onLongPressWithDuration(...)` - Long press with details
 - `onTapWithPosition({onTapDown, ...})` - Tap with position
 
+### Badge Extensions
+- `badge({label, count, backgroundColor, textColor, size, alignment, ...})` - Add badge with optional count
+- `dotBadge({color, size, alignment, ...})` - Add simple dot badge
+- `notificationBadge(count, {showZero})` - Add notification badge with count
+
+### Conditional Extensions
+- `when(condition, transform)` - Apply transformation conditionally
+- `conditional(condition, {onTrue, onFalse})` - Apply different transformations based on condition
+- `loadingState({isLoading, loadingWidget})` - Show loading state
+- `errorState({hasError, errorWidget, errorMessage})` - Show error state
+- `emptyState({isEmpty, emptyWidget, emptyMessage})` - Show empty state
+- `switchState({state, cases, defaultCase})` - Switch between multiple states
+
+### Blur Extensions
+- `blur({sigmaX, sigmaY, tileMode})` - Apply blur effect
+- `backdropBlur({sigma, overlayColor})` - Apply backdrop blur (frosted glass)
+- `frostedGlass({sigma, color, opacity})` - Frosted glass effect with overlay
+- `blurRounded({sigma, borderRadius, radius})` - Apply blur with border radius
+
+### Ink Extensions
+- `inkWell({onTap, onDoubleTap, onLongPress, splashColor, ...})` - Wrap in InkWell
+- `ink({color, decoration, width, height, padding})` - Wrap in Ink
+- `inkTap({onTap, color, splashColor, borderRadius})` - Ink with tap handler
+- `inkDecoration({onTap, decoration, splashColor, borderRadius})` - Ink with decoration and tap
+- `inkResponse({onTap, splashColor, highlightColor, ...})` - Material ink response
+
+### Fractional Extensions
+- `fractionalTranslate({x, y, transformHitTests})` - Translate by fraction of widget size
+- `fractionalTranslateX(x)` - Translate horizontally by fraction
+- `fractionalTranslateY(y)` - Translate vertically by fraction
+- `slideFromLeft(progress)`, `slideFromRight(progress)` - Slide animations
+- `slideFromTop(progress)`, `slideFromBottom(progress)` - Vertical slide animations
+
+### Wrap Extensions
+- `toWrap({direction, alignment, spacing, runSpacing, ...})` - Convert list to Wrap widget
+- `toHorizontalWrap({spacing, runSpacing, alignment})` - Quick horizontal wrap
+- `toVerticalWrap({spacing, runSpacing, alignment})` - Quick vertical wrap
+- `toFlow({delegate, clipBehavior})` - Convert list to Flow widget
+- `wrap({direction, alignment, spacing, ...})` - Wrap single widget in Wrap
+
+### Table Extensions
+- `toTable({columnWidths, border, defaultVerticalAlignment, ...})` - Convert 2D list to Table
+- `toBorderedTable({borderColor, borderWidth, ...})` - Quick bordered table
+- `listTile({leading, title, subtitle, trailing, onTap, ...})` - Wrap in ListTile
+- `withDivider({height, thickness, color, ...})` - Add divider after widget
+- `withDividers({height, thickness, color, ...})` - Insert dividers between list items (on List)
+- `separated(Widget)` - Insert custom separator between list items (on List)
+
+### Custom Layout Extensions
+- `layoutBuilder(builder)` - Wrap in LayoutBuilder for responsive layouts
+- `customLayout({delegate})` - Wrap in CustomSingleChildLayout
+- `offstage({offstage})` - Hide without removing from tree (zero-cost hiding)
+- `overflowBox({alignment, minWidth, maxWidth, minHeight, maxHeight})` - Overflow control
+- `sizedOverflowBox({size, alignment})` - Sized overflow box
+- `limitedBox({maxWidth, maxHeight})` - Limit size in unconstrained contexts
+- `intrinsicHeight()` - Wrap in IntrinsicHeight (use sparingly - expensive)
+- `intrinsicWidth({stepWidth, stepHeight})` - Wrap in IntrinsicWidth (use sparingly - expensive)
+- `repaintBoundary()` - Isolate repaints for performance optimization
+- `customPaint({painter, foregroundPainter, size, ...})` - Custom painting
+- `physicalModel({color, elevation, shadowColor, ...})` - Elevation and shadows
+- `physicalShape({shape, color, elevation, ...})` - Custom shaped elevation
+- `toListView({scrollDirection, shrinkWrap, padding, ...})` - Convert list to ListView (on List)
+- `toGridView({crossAxisCount, spacing, childAspectRatio, ...})` - Convert list to GridView (on List)
+
 ### Utility Extensions
 - `safeArea({top, bottom, left, right, minimum})` - SafeArea wrapper
 - `safeTop()` - SafeArea for top only
@@ -905,10 +1256,18 @@ Container()
 - Built-in animations ✅
 - Context helpers ✅
 - Form and input extensions ✅
-- Theme-aware helpers
+- Badge Extensions ✅
+- Conditional Extensions ✅
+- Blur Extensions ✅
+- Ink Extensions ✅
+- Fractional Extensions ✅
+- Wrap Extensions ✅
+- Table Extensions ✅
+- CustomLayout Extensions ✅
+
 
 ### Future Considerations
-- More layout helpers (Wrap, Flow, etc.)
+- Theme-aware helpers
 - Enhanced accessibility features
 
 ---

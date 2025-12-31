@@ -670,6 +670,142 @@ TextFormField(
 
 **💡 Tip**: See the [Flumpose example](https://pub.dev/packages/flumpose/example) for complete, interactive demonstrations of all features!
 
+#### Platform Adaptive
+
+```dart
+// Platform-specific styling
+Container().platformAdaptive(
+  ios: (w) => w.backgroundColor(Colors.blue).borderRadius(BorderRadius.circular(8)),
+  android: (w) => w.backgroundColor(Colors.green).elevation(4),
+  web: (w) => w.backgroundColor(Colors.purple).boxShadow(),
+)
+
+// Platform visibility
+DesktopMenu().onlyDesktopPlatform()
+MobileNavBar().onlyMobilePlatform()
+WebBanner().onlyWeb()
+```
+
+#### Adaptive Colors
+
+```dart
+// Theme and brightness-aware colors
+Container().adaptiveBackgroundColor(
+  light: Colors.white,
+  dark: Colors.black,
+  highContrast: Colors.yellow,
+)
+
+// Theme-aware shortcuts
+Container().primaryColor()
+Card().surfaceColor()
+Text('Hello').onSurfaceColor()
+```
+
+#### Advanced Gestures
+
+```dart
+// Swipe gestures
+Card().onSwipe(
+  onSwipeLeft: () => deleteItem(),
+  onSwipeRight: () => archiveItem(),
+  onSwipeUp: () => favoriteItem(),
+  onSwipeDown: () => shareItem(),
+)
+
+// Multi-touch gestures
+Image.network('photo.jpg').onMultiTouch(
+  onTwoFingerTap: () => showDetails(),
+  onThreeFingerTap: () => showContextMenu(),
+  onPinchUpdate: (details) => handleZoom(details.scale),
+)
+
+// Pinch zoom with constraints
+Container().onPinchZoom(
+  onZoom: (scale) => setState(() => currentScale = scale),
+  minScale: 0.1,
+  maxScale: 5.0,
+)
+
+// Rotation gestures
+Widget().onRotateGesture(
+  onRotate: (angle) => setState(() => rotation = angle),
+  sensitivity: 2.0,
+)
+```
+
+#### Performance Testing
+
+```dart
+// Build time profiling
+ExpensiveWidget().measureBuildTime(
+  label: 'ExpensiveWidget',
+  onMeasured: (duration) => print('Build took: $duration'),
+)
+
+// Memory monitoring
+ListView.builder(...).measureMemoryUsage(
+  onMeasured: (usage) => print('Memory: ${usage.current}MB'),
+)
+
+// Stress testing
+ComplexAnimation().stressTest(
+  iterations: 1000,
+  onComplete: (result) => print('Average FPS: ${result.averageFPS}'),
+)
+
+// Performance overlay
+MyApp().performanceOverlay(
+  showFPS: true,
+  showMemory: true,
+  showBuildTime: true,
+)
+
+// Benchmarking
+CriticalWidget().benchmark(
+  testName: 'critical_widget_performance',
+  onResult: (result) => sendToAnalytics(result),
+)
+```
+
+#### Modal Presentations
+
+```dart
+// Bottom sheet
+LoginForm().showAsBottomSheet(
+  context,
+  isScrollControlled: true,
+  isDismissible: true,
+)
+
+// Dialog
+AlertDialog(
+  title: Text('Confirm'),
+  content: Text('Are you sure?'),
+).showAsDialog(context)
+
+// SnackBar
+Text('Success!').showAsSnackBar(
+  context,
+  backgroundColor: Colors.green,
+  duration: Duration(seconds: 2),
+)
+
+// Toast message
+'Operation completed'.showAsToast(context)
+
+// Full-screen dialog
+SettingsPage().showAsFullScreenDialog(context)
+
+// Draggable sheet
+ContentWidget().showAsDraggableSheet(
+  context,
+  initialChildSize: 0.6,
+  minChildSize: 0.3,
+  maxChildSize: 0.9,
+)
+```
+
 ---
 
 ## ⚡ Performance Deep Dive
@@ -1238,6 +1374,44 @@ Container()
 - `scaffold({appBar, floatingActionButton, ...})` - Scaffold wrapper
 - `dismissKeyboard()` - Tap to dismiss keyboard
 - `rotatedBox(int)` - Rotate by quarter turns
+
+### Platform Adaptive Extensions (v1.0.0)
+- `platformAdaptive({ios, android, web, macos, windows, linux, ...})` - Platform-specific transformations
+- `onlyIOS()`, `onlyAndroid()`, `onlyWeb()` - Platform-specific visibility
+- `onlyMacOS()`, `onlyWindows()`, `onlyLinux()` - Desktop platform visibility
+- `onlyMobilePlatform()`, `onlyDesktopPlatform()` - Device type filtering
+
+### Adaptive Color Extensions (v1.0.0)
+- `adaptiveColor({light, dark, highContrast})` - Brightness-aware colors
+- `adaptiveBackgroundColor({light, dark, highContrast})` - Adaptive background colors
+- `primaryColor()`, `surfaceColor()`, `onSurfaceColor()` - Theme-aware colors
+- `secondaryColor()`, `errorColor()`, `themeBackgroundColor()` - Additional theme colors
+
+### Advanced Gesture Extensions (v1.0.0)
+- `onSwipe({onSwipeLeft, onSwipeRight, onSwipeUp, onSwipeDown})` - Swipe gesture detection
+- `onSwipeHorizontal({onSwipeLeft, onSwipeRight})` - Horizontal swipe shortcuts
+- `onSwipeVertical({onSwipeUp, onSwipeDown})` - Vertical swipe shortcuts
+- `onSwipeWithDetails({onSwipe})` - Swipe with velocity and direction data
+- `onMultiTouch({onTwoFingerTap, onThreeFingerTap, onPinchUpdate})` - Multi-finger gestures
+- `onPinchZoom({onZoom, minScale, maxScale})` - Pinch-to-zoom with constraints
+- `onRotateGesture({onRotate, sensitivity})` - Rotation gesture detection
+
+### Performance Testing Extensions (v1.0.0)
+- `measureBuildTime({label, onMeasured})` - Build time profiling
+- `measureMemoryUsage({interval, onMeasured})` - Memory usage tracking
+- `stressTest({iterations, onComplete})` - Widget stress testing
+- `performanceOverlay({showFPS, showMemory})` - Real-time performance overlay
+- `benchmark({testName, measureRuns, onResult})` - Comprehensive benchmarking
+
+### Modal Presentation Extensions (v1.0.0)
+- `showAsBottomSheet(context, {isScrollControlled, isDismissible})` - Bottom sheet presentation
+- `showAsDialog(context, {barrierDismissible, barrierColor})` - Dialog presentation
+- `showAsSnackBar(context, {duration, backgroundColor, action})` - SnackBar presentation
+- `showAsPopup(context, {position, items, elevation})` - Popup menu presentation
+- `showAsFullScreenDialog(context)` - Full-screen dialog presentation
+- `showAsCustomDialog(context, {alignment, barrierColor})` - Custom positioned dialog
+- `showAsDraggableSheet(context, {initialChildSize, minChildSize})` - Draggable scrollable sheet
+- `showAsToast(context, {duration})` - Quick toast messages (on String)
 
 ---
 

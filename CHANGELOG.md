@@ -1,3 +1,41 @@
+## [1.0.0] 🎉
+**Major Release** - Platform-adaptive widgets, advanced gestures, performance testing, and modal presentations.
+
+### Added
+**Platform Adaptive Extensions** - Cross-platform widget adaptation:
+- `.platformAdaptive({ios, android, web, macos, windows, linux, ...})` - Platform-specific transformations
+- `.onlyIOS()`, `.onlyAndroid()`, `.onlyWeb()` - Platform-specific visibility
+- `.onlyMobilePlatform()`, `.onlyDesktopPlatform()` - Device type filtering
+
+**Adaptive Color Extensions** - Theme and brightness-aware colors:
+- `.adaptiveColor({light, dark, highContrast})` - Brightness-aware colors
+- `.adaptiveBackgroundColor({light, dark, highContrast})` - Adaptive background colors
+- `.primaryColor()`, `.surfaceColor()`, `.onSurfaceColor()` - Theme-aware colors
+
+**Advanced Gesture Extensions** - Multi-touch and swipe interactions:
+- `.onSwipe({onSwipeLeft, onSwipeRight, onSwipeUp, onSwipeDown})` - Swipe gesture detection
+- `.onSwipeHorizontal({onSwipeLeft, onSwipeRight})` - Horizontal swipe shortcuts
+- `.onSwipeVertical({onSwipeUp, onSwipeDown})` - Vertical swipe shortcuts
+- `.onSwipeWithDetails({onSwipe})` - Swipe with velocity and direction data
+- `.onMultiTouch({onTwoFingerTap, onThreeFingerTap, onPinchUpdate})` - Multi-finger gestures
+- `.onPinchZoom({onZoom, minScale, maxScale})` - Pinch-to-zoom with constraints
+- `.onRotateGesture({onRotate, sensitivity})` - Rotation gesture detection
+
+**Performance Testing Extensions** - Built-in performance monitoring:
+- `.measureBuildTime({label, onMeasured})` - Build time profiling
+- `.measureMemoryUsage({interval, onMeasured})` - Memory usage tracking
+- `.stressTest({iterations, onComplete})` - Widget stress testing
+- `.performanceOverlay({showFPS, showMemory})` - Real-time performance overlay
+- `.benchmark({testName, measureRuns, onResult})` - Comprehensive benchmarking
+
+**Modal Presentation Extensions** - Easy modal presentations:
+- `.showAsBottomSheet({isScrollControlled, isDismissible})` - Bottom sheet presentation
+- `.showAsDialog({barrierDismissible, barrierColor})` - Dialog presentation
+- `.showAsSnackBar({duration, backgroundColor, action})` - SnackBar presentation
+- `.showAsPopup({position, items, elevation})` - Popup menu presentation
+- `.showAsToast(message, {duration})` - Quick toast messages
+- `.showAsFullScreenDialog()` - Full-screen dialog presentation
+
 ## [0.0.9]
 Comprehensive update adding list builders, loading states, tooltips, badges, conditional rendering, blur effects, ink interactions, fractional translations, wrap layouts, tables, and custom layout helpers.
 
